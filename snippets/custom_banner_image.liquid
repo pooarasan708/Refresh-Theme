@@ -1,0 +1,26 @@
+<div class="banner_contain">
+      <div class="desktop_img">
+         {%- if section.settings.image != blank -%}
+           {{ section.settings.image
+              | image_url: width: 1500
+              | image_tag: loading: 'lazy', sizes: sizes, widths: '165, 360, 535, 750, 1070, 1500'
+           }}
+          {%- else -%}
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+      <div class="mob_img">
+         {%- if section.settings.image_mob != blank -%}
+           {{ section.settings.image_mob
+              | image_url: width: 1500
+              | image_tag: loading: 'lazy', sizes: sizes, widths: '165, 360, 535, 750, 1070, 1500'
+           }}
+          {%- else -%}
+          {{ section.settings.image
+              | image_url: width: 1500
+              | image_tag: loading: 'lazy'
+           }}
+        {%- endif -%}
+        
+      </div>
+    </div>

@@ -1,0 +1,59 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "disabled": true,
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Subscribe to our emails",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Be the first to know about new collections and exclusive offers.<\/p>"
+          }
+        },
+        "email-form": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "paragraph",
+        "email-form"
+      ],
+      "settings": {
+        "color_scheme": "accent-2",
+        "full_width": true,
+        "padding_top": 60,
+        "padding_bottom": 0
+      }
+    },
+    "1f1935c4-a95a-4dae-a659-c4d53ea3a672": {
+      "type": "banner_section_custom",
+      "settings": {
+        "heading": "Test",
+        "image": "shopify:\/\/shop_images\/banner-template-webinar-business.jpg",
+        "image_mob": "shopify:\/\/shop_images\/banner-rollup-design-business-co.jpg"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "newsletter",
+    "1f1935c4-a95a-4dae-a659-c4d53ea3a672"
+  ]
+}

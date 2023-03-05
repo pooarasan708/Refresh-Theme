@@ -1,0 +1,195 @@
+<div class="page-width">
+  {% if product.available %}
+
+    <div class="custom-product-page">
+      
+        <div class="product_gallery">
+          <div class="product_thumbnail_gallery">
+                {% for productImage in product.images %}
+                   <img src="{{ productImage | img_url:'1080x' }}">
+                {% endfor %}
+          </div>
+          
+          <div class="product_gallery_container">
+          <img src="{{ product.featured_image | img_url:'1080x' }}">
+          </div>
+
+        </div>
+
+      <div class="product_info_wrapper">
+         <h4>{{ product.vendor }}</h4>
+         <h2>{{ product.title }}</h2>
+
+        <div class="product_price">
+            <span class="price-item price-item--sale price-item--last">{{ product.price | money_with_currency}}</span>
+            <span class="compare_price">{{ product.compare_at_price | money_with_currency }}</span>
+        </div>
+
+        <div class="product_options">
+          {% for option in product.options_with_values %}
+            <h3>{{ option.name }}</h3>
+            <select>
+              {% for value in option.values %}
+                <option value="{{ value }}">{{ value }}</option>
+              {% endfor %}
+            </select>
+          {% endfor %}
+        </div>
+
+           
+      </div>
+
+      
+      
+    </div>
+  
+  {% endif %}
+</div>
+
+<div class="cart-new" id="custom-cart" data-id="{{ section.id }}">
+
+{% form 'cart', cart %}
+{% for items in cart.items %}
+  <div class="cart_items jsss-contents" >
+    
+    <div class="cart_tems-details no-js-hidden">
+      <h4>{{ items.title }}</h4>
+      <p> Single item Price{{ items.final_price | money_with_currency }}</p>
+      <p> Single item Price{{ items.final_line_price | money_with_currency }}</p>
+      {% unless items.product.has_only_default_variant %}
+            {% for option in items.options_with_values %}
+              Option {{ option.name }} : {{ option.value }}
+            {% endfor %}
+      {% endunless %}
+       <quantity-input class="quantity cart-quantity">
+                        <button class="quantity__button no-js-hidden" name="minus" type="button">
+                          <span class="visually-hidden">
+                            {{- 'products.product.quantity.decrease' | t: product: item.product.title | escape -}}
+                          </span>
+                          {% render 'icon-minus' %}
+                        </button>
+                        <input
+                          class="quantity__input"
+                          data-quantity-variant-id="{{ item.variant.id }}"
+                          type="number"
+                          name="updates[]"
+                          value="{{ item.quantity }}"
+                          {% # theme-check-disable %}
+                          data-cart-quantity="{{ cart | item_count_for_variant: item.variant.id }}"
+                          min="{{ item.variant.quantity_rule.min }}"
+                          {% if item.variant.quantity_rule.max != null %}
+                            max="{{ item.variant.quantity_rule.max }}"
+                          {% endif %}
+                          step="{{ item.variant.quantity_rule.increment }}"
+                          {% # theme-check-enable %}
+                          aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+                          id="Quantity-{{ item.index | plus: 1 }}"
+                          data-index="{{ item.index | plus: 1 }}"
+                        >
+                        <button class="quantity__button no-js-hidden" name="plus" type="button">
+                          <span class="visually-hidden">
+                            {{- 'products.product.quantity.increase' | t: product: item.product.title | escape -}}
+                          </span>
+                          {% render 'icon-plus' %}
+                        </button>
+                      </quantity-input>
+      <a href="{{ items.url_to_remove }}">Remove</a>
+  <input type="submit" value="Update cart">
+
+      {{ cart.item_count }}
+  {{ cart.original_line_price }}
+  {{ cart.items_subtotal_price | money_with_currency }}
+  {{ cart.original_total_price | money_without_currency }}
+  {{ cart.taxes_included }}
+
+    </div>
+    
+    <div class="cart_item-image">
+      <img src="{{ items.image | img_url:'400x' }}">
+    </div>
+
+  </div>  
+  
+  {% endfor %}
+  
+{% endform %}
+
+</div>
+<script>
+var cartContents = fetch(window.Shopify.routes.root + 'cart.js')
+  .then(response => response.json())
+  .then(data => { console.log(data) });
+
+</script>
+
+<style>
+  .custom-product-page{
+    display: flex;
+    justify-content: space-between;
+    padding: 40px 0;
+  }
+
+  .product_gallery{
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .product_gallery_container{
+    width: 75%;
+  }
+  
+  .product_thumbnail_gallery{
+    width: 20%;
+  }
+
+  .product_thumbnail_gallery img{
+    max-width: 100%;
+  }
+  
+ .product_gallery  .product_gallery_container img{
+   max-width: 100%;
+   width:100%;
+ }
+  
+  .product_info_wrapper{
+     width: 50%;
+  }
+
+  .compare_price{
+    text-decoration: line-through;
+    margin-left: 20px;
+  }
+
+/*Cart Items*/  
+.cart_items{
+  display: flex;
+  gap: 30px;
+}
+.cart_item-image{
+  max-width: 100px;
+}  
+.cart_item-image img{
+  max-width: 100%;
+}  
+
+
+  
+</style>
+{% schema %}
+  {
+    "name": "custom-product",
+    "settings": [],
+    "presets":[
+      {
+        "name": "custom-product"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,97 @@
+<div class="page-width">
+
+{% if shop.name %}
+  <h1>{{ shop.name }}</h1>
+{% endif %}
+
+  
+{% assign collection = collections['all'] %}
+{% assign  collect = collections['alll']%}
+  
+  {% for products in collection.products %}
+      {{ products.title }}<br>
+
+  {% endfor %}
+
+<h2>Switch Case</h2>
+  
+{% assign caseValue = "" %}  
+
+{% case caseValue %}
+  
+  {% when "case", "switch case" %}
+    I am a Switch case 
+
+  {% when "if" or "elseIF" %}
+    I am a if and ElseIf condition 
+
+  {% else %}
+    This is Default Value
+  
+{% endcase %}
+
+
+<h1>Break</h1>
+
+{% for number in (1..10) limit: 2 %}
+  <p>{{ number }}</p>
+{% endfor %}
+
+
+{% assign array = '1,2,3,4,5,6,7,8' | split:',' %}  
+
+{% for item in array %}
+
+  {% if forloop.length > 0 %}
+    {{ forloop.rindex }}
+    
+  {% endif %}
+  
+{% endfor %}
+
+
+
+  <h2>Table</h2>
+
+<table>
+  {% tablerow product in collection.products cols:3 %}
+    {{ product.title }}
+  {% endtablerow %}
+</table>  
+
+
+  
+</div>
+
+
+
+<script>
+var cartContents = fetch(window.Shopify.routes.root + 'cart.js')
+  .then(response => response.json())
+  .then(data => { console.log(data)  });
+
+
+  fetch(window.Shopify.routes.root + "?sections={newsletter}")
+  .then(res => res.json())
+  .then(data => {console.log(data)})
+
+</script>
+
+
+{% schema %}
+  {
+    "name": "Liquid Tutorial",
+    "settings": [],
+    "presets":[
+      {
+        "name":"Liquid Tutorial"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
